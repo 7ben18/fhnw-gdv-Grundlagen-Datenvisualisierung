@@ -1,0 +1,184 @@
+---
+title: "gdv_LE1"
+output: html_notebook
+---
+# Bibliotheken & Datensatz
+## Bibliotheken Downloaden
+```{r}
+# Installation
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("tibble")
+install.packages("gapminder")
+```
+
+## Bibliotheken aktivieren
+```{r}
+library(tidyverse)
+library(dplyr)
+library(tibble)
+library(gapminder)
+```
+
+## Datensatz laden
+```{r}
+gapminder_data <- gapminder
+```
+
+# Uebersicht ueber Datensatz
+## Struktur des Dataframes
+```{r}
+str(gapminder_data)
+```
+# 
+```{r}
+summary(gapminder_data)
+```
+# Diagramm Beschriftung
+## Diagram ohne Beschriftung
+```{r}
+gapminder_2007 <- gapminder_data %>% filter(year == 2007)
+
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.5) +
+  scale_y_log10() 
+```
+## Diagramm mit Beschriftung
+```{r}
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Lebenserwartung in Abhängigkeit vom Bruttoinlandprodukt unterteilt in Kontienten",
+       subtitle = "Jahr 2007 - 147 Observationen",
+       x = "Bruttoinlandprodukt",
+       y = "Lebenserwartung in Jahren",
+       caption = "Datensatz: Gapminder",
+       color = "Kontinent",
+       size = "Bevölkerungsgrösse")
+  scale_y_log10() 
+```
+# Streudiagramm - Liniendiagramm 
+## Streudiagramm ohne Datenverstaendnis
+```{r}
+by_year_LifeExp <- gapminder_data %>% 
+  select(year, lifeExp, continent)
+
+ggplot(by_year_LifeExp, aes(x = year, y = lifeExp)) + 
+  geom_point(alpha = 1) + 
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder")
+```
+
+## Streudiagramm mit kleineren Punkten und Intensitaet
+```{r}
+by_year_LifeExp_2 <- gapminder_data %>% 
+  select(year, lifeExp, continent)
+
+ggplot(by_year_LifeExp_2, aes(x = year, y = lifeExp, color = continent)) + 
+  geom_point(alpha = 0.3, size = 1) + 
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder", color = "Kontinent")
+```
+
+## Streudiagram Aggregiert
+```{r}
+by_year <- gapminder %>%
+  group_by(year) %>%
+  summarize(mean_life_exp = mean(lifeExp))
+            
+ggplot(by_year, aes(x = year, y = mean_life_exp)) + 
+  geom_point() + 
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Durchschnittliche Lebenserwartung in Jahren", subtitle = "12 Observationen", caption = "Datensatz: Gapminder")
+```
+
+```{r}
+ggplot(by_year_LifeExp, aes(x = year, y = lifeExp)) + 
+  geom_point(alpha = 1) + 
+  geom_line() +
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder")
+```
+
+
+## Liniendiagramm ohne Datenverstaendnis
+```{r}
+ggplot(by_year_LifeExp_2, aes(x = year, y = lifeExp, color = continent)) + 
+  geom_point(alpha = 0.3, size = 1) +
+  geom_line() + 
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder", color = "Kontinent")
+```
+
+## Liniendiagramm - Streudiagramm Aggregiert
+```{r}
+ggplot(by_year, aes(x = year, y = mean_life_exp)) + 
+  geom_point(color = "blue", size = 2) +
+  geom_line() +
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Durchschnittliche Lebenserwartung in Jahren", subtitle = "12 Observationen", caption = "Datensatz: Gapminder")
+```
+# Histogramme
+## Schlechtes Histogramm der Lebenserwartung auf der Welt
+```{r}
+ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
+  geom_histogram(bins = 7, fill = "grey", color = "black") + 
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, pdf", caption = "Datensatz: Gapminder")
+```
+
+## Besseres Histogramm - Lebenserwartung der Welt (Multimodalitaeten)
+```{r}
+ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
+  geom_histogram(bins = 1000, fill = "grey", color = "black") + 
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, pdf", caption = "Datensatz: Gapminder")
+```
+
+## Besseres Histogramm - Lebenserwartung der Welt (bins mit = 30)
+```{r}
+ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
+  geom_histogram(bins = 30, fill = "grey", color = "black") + 
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, pdf", caption = "Datensatz: Gapminder")
+```
+
+## Aufteilung nach Kontinente, fuer mehr Informationen
+```{r}
+ggplot(by_year_LifeExp, aes(x = lifeExp, color = continent)) + 
+  geom_histogram(fill = "white", alpha = 0.4, position="identity",bins = 30) + 
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder")
+```
+
+## Relatives Histogramm 
+```{r}
+ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
+  geom_histogram(aes(y = ..density..), bins = 30, fill = "grey", color = "black") + 
+  geom_density() +
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Relative Anzahl Observationen", subtitle = "1704 Observationen, cdf", caption = "Datensatz: Gapminder")
+```
+
+## Relatives Histogramm, aufgeteilt nach Kontinente
+```{r}
+ggplot(by_year_LifeExp, aes(x = lifeExp, color = continent)) + 
+  geom_histogram(aes(y = ..density..), fill = "white", alpha = 0.4, position="identity",bins = 30) + 
+  geom_density() +
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Relative Anzahl Observationen", subtitle = "1704 Observationen, cdf", caption = "Datensatz: Gapminder")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
