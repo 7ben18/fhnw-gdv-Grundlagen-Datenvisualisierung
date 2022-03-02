@@ -115,70 +115,44 @@ ggplot(by_year, aes(x = year, y = mean_life_exp)) +
 ## Schlechtes Histogramm der Lebenserwartung auf der Welt
 ```{r}
 ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
-  geom_histogram(bins = 7, fill = "grey", color = "black") + 
-  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, pdf", caption = "Datensatz: Gapminder")
+  geom_histogram(bins = 5, fill = "grey", color = "black") + 
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, Anzahl Klassenbreite: 10", caption = "Datensatz: Gapminder")
 ```
 
 ## Besseres Histogramm - Lebenserwartung der Welt (Multimodalitaeten)
 ```{r}
 ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
   geom_histogram(bins = 1000, fill = "grey", color = "black") + 
-  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, pdf", caption = "Datensatz: Gapminder")
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, Anzahl Klassenbreite: 1704", caption = "Datensatz: Gapminder")
 ```
 
 ## Besseres Histogramm - Lebenserwartung der Welt (bins mit = 30)
 ```{r}
 ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
   geom_histogram(bins = 30, fill = "grey", color = "black") + 
-  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, pdf", caption = "Datensatz: Gapminder")
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, Anzahl Klassenbreite: 30", caption = "Datensatz: Gapminder")
 ```
 
-## Aufteilung nach Kontinente, fuer mehr Informationen
+
+
+## Aufteilung nach Kontinente, fuer mehr Informationen (stack)
+```{r}
+ggplot(by_year_LifeExp, aes(x = lifeExp, color = continent)) + 
+  geom_histogram(fill = "white", alpha = 0.4, position="stack",bins = 30) + 
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, Aufgestapelt", caption = "Datensatz: Gapminder", color = "Kontinent")
+```
+
+## Aufteilung nach Kontinente, fuer mehr Informationen (identity)
 ```{r}
 ggplot(by_year_LifeExp, aes(x = lifeExp, color = continent)) + 
   geom_histogram(fill = "white", alpha = 0.4, position="identity",bins = 30) + 
-  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder")
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, Überlappend", caption = "Datensatz: Gapminder", color = "Kontinent")
 ```
 
-## Relatives Histogramm 
-```{r}
-ggplot(by_year_LifeExp, aes(x = lifeExp)) + 
-  geom_histogram(aes(y = ..density..), bins = 30, fill = "grey", color = "black") + 
-  geom_density() +
-  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Relative Anzahl Observationen", subtitle = "1704 Observationen, cdf", caption = "Datensatz: Gapminder")
-```
-
-## Relatives Histogramm, aufgeteilt nach Kontinente
+## Aufteilung nach Kontinente, fuer mehr Informationen (dodge)
 ```{r}
 ggplot(by_year_LifeExp, aes(x = lifeExp, color = continent)) + 
-  geom_histogram(aes(y = ..density..), fill = "white", alpha = 0.4, position="identity",bins = 30) + 
-  geom_density() +
-  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Relative Anzahl Observationen", subtitle = "1704 Observationen, cdf", caption = "Datensatz: Gapminder")
+  geom_histogram(fill = "white", alpha = 0.4, position="dodge",bins = 30) + 
+  labs(title = "Histogramm der Lebenserwartung der Welt", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "1704 Observationen, Nebeneinander", caption = "Datensatz: Gapminder", color = "Kontinent")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
