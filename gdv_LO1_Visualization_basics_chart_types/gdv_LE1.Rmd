@@ -7,16 +7,12 @@ output: html_notebook
 ```{r}
 # Installation
 install.packages("tidyverse")
-install.packages("dplyr")
-install.packages("tibble")
 install.packages("gapminder")
 ```
 
 ## Bibliotheken aktivieren
 ```{r}
 library(tidyverse)
-library(dplyr)
-library(tibble)
 library(gapminder)
 ```
 
