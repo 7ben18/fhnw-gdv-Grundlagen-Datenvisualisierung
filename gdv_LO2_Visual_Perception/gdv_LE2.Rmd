@@ -3,7 +3,30 @@ title: "gdv_LE2"
 output: html_notebook
 ---
 
+# Bibliotheken & Datensatz
+## Bibliotheken Downloaden
 ```{r}
+# Installation
+install.packages("tidyverse")
+```
 
+```{r}
+library(tidyverse)
+```
+
+```{r}
+data <- ggplot2::diamonds
+```
+
+```{r}
+help(diamonds)
+str(data)
+data <- data %>% filter(color == c("D","E","F","G"))
+data <- sample_n(data, size = 100)
+```
+
+```{r}
+ggplot(data, aes( x = x, y = price, color = color)) + 
+  geom_point() 
 ```
 
