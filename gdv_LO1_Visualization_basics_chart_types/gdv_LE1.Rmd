@@ -140,8 +140,8 @@ ggplot(by_year_LifeExp_2007, aes(x = lifeExp)) +
 
 ## Aufteilung nach Kontinente, fuer mehr Informationen (stack)
 ```{r}
-ggplot(by_year_LifeExp_2007, aes(x = lifeExp, color = continent)) + 
-  geom_histogram(fill = "white", alpha = 0.4, position="stack",bins = 30) + 
+ggplot(by_year_LifeExp_2007, aes(x = lifeExp, color = continent, fill = continent)) + 
+  geom_density(alpha = 0.4) + 
   labs(title = "Histogramm der Lebenserwartung in 2007", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "142 Observationen, Aufgestapelt", caption = "Datensatz: Gapminder", color = "Kontinent")
 ```
 
