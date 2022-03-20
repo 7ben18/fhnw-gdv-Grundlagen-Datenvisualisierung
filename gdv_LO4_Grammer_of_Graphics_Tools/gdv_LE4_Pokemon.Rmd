@@ -1,0 +1,142 @@
+---
+title: "gdv_LE4"
+output: html_notebook
+---
+
+```{r}
+install.packages(tidyverse)
+```
+
+```{r}
+library("tidyverse")
+```
+
+# Daten einlesen
+```{r}
+data <- read.csv("pokemon_data.csv")
+```
+
+# Filtering and combining DFs
+```{r}
+pokemontyp = c("Fire", "Water", "Grass")
+
+pokemondata <- data %>% filter(Type.1 %in% pokemontyp)
+pokemondata <- slice_sample(pokemondata, prop = 0.4)
+```
+
+
+# Dimension 2
+```{r}
+ggplot(pokemondata, aes(x = Attack, y = Defense)) + 
+  geom_point() + 
+  labs(title = "Attack and Defense",
+       x = "Attack",
+       y = "Defense",
+       subtitle = "Fire, Water and Grasstype",
+       caption = "Pokemon Data")
+```
+# Dimension 3
+```{r}
+ggplot(pokemondata, aes(x = Attack, y = Defense, 
+                        color = as.factor(Type.1))) + 
+  geom_point() + 
+  labs(title = "Attack and Defense",
+       x = "Attack",
+       y = "Defense",
+       subtitle = "Fire, Water and Grasstype",
+       caption = "Pokemon Data",
+       color = "Pokemon Type")
+```
+
+```{r}
+pokemondata <- pokemondata %>% mutate(Total_Stats = HP + Attack + Defense + Sp..Atk + Sp..Def + Speed)
+```
+
+
+# Dimension 4
+```{r}
+ggplot(pokemondata, aes(x = Attack, y = Defense, 
+                        color = as.factor(Type.1), 
+                        size = Total_Stats)) + 
+  geom_point(alpha = 0.4) + 
+  labs(title = "Attack and Defense",
+       x = "Attack",
+       y = "Defense",
+       subtitle = "Fire, Water and Grasstype",
+       caption = "Pokemon Data",
+       color = "Pokemon Type",
+       size = "Total Stats")
+```
+# Dimension 5
+
+```{r}
+pokemondata$Type.2 <- as.factor(pokemondata$Type.2) 
+pokemondata <- pokemondata %>% mutate(Type.2 = na_if(Type.2, ""))
+pokemondata <- pokemondata %>% mutate(dualtype = pokemondata %>% complete.cases()) 
+pokemondata
+```
+
+
+```{r}
+ggplot(pokemondata, aes(x = Attack, y = Defense, 
+                        color = as.factor(Type.1), 
+                        size = Total_Stats, 
+                        shape = dualtype)) + 
+  geom_point(alpha = 0.4) + 
+  labs(title = "Attack and Defense",
+       x = "Attack",
+       y = "Defense",
+       subtitle = "Fire, Water and Grasstype",
+       caption = "Pokemon Data",
+       color = "Pokemon Type",
+       size = "Total Stats",
+       shape = "Dual Type")
+```
+# 6 Dimensions
+```{r}
+ggplot(pokemondata, aes(x = Attack, y = Defense, 
+                        color = as.factor(Type.1), 
+                        size = Total_Stats, 
+                        shape = dualtype)) + 
+  geom_point(alpha = 0.4) + 
+  labs(title = "Attack and Defense",
+       x = "Attack",
+       y = "Defense",
+       subtitle = "Fire, Water and Grasstype",
+       caption = "Pokemon Data",
+       color = "Pokemon Type",
+       size = "Total Stats",
+       shape = "Dual Type") +
+  facet_wrap(~ Legendary,
+             labeller = labeller(Legendary = c('FALSE' = "Not Legendary",
+                                               'TRUE' = "Legendary")))
+```
+# 7 Dimensions
+```{r}
+ggplot(pokemondata, aes(x = Attack, y = Defense, 
+                        color = as.factor(Type.1), 
+                        size = Total_Stats, 
+                        shape = dualtype)) + 
+  geom_point(alpha = 0.4) + 
+  labs(title = "Attack and Defense",
+       x = "Attack",
+       y = "Defense",
+       subtitle = "Fire, Water and Grasstype",
+       caption = "Pokemon Data",
+       color = "Pokemon Type",
+       size = "Total Stats",
+       shape = "Dual Type") +
+  facet_grid(Legendary ~ Generation,
+             labeller = labeller(Generation = c('1' = "Gen. 1",
+                                                '2' = "Gen. 2",
+                                                '3' = "Gen. 3",
+                                                '4' = "Gen. 4",
+                                                '5' = "Gen. 5",
+                                                '6' = "Gen. 6"),
+                                 Legendary = c('FALSE' = "Not Legendary",
+                                               'TRUE' = "Legendary")))
+```
+
+
+
+
