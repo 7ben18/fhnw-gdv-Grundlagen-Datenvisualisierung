@@ -21,6 +21,7 @@ data <- read.csv("pokemon_data.csv")
 pokemontyp = c("Fire", "Water", "Grass")
 
 pokemondata <- data %>% filter(Type.1 %in% pokemontyp)
+set.seed(10) # Forgot to set the seed for the doc.... well.. hope thats fine :) 
 pokemondata <- slice_sample(pokemondata, prop = 0.4)
 ```
 
