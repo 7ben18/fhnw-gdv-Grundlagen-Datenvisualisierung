@@ -1,0 +1,182 @@
+---
+title: "gdv_LE3"
+output: html_notebook
+---
+
+# Library downloaden
+```{r}
+# Installation
+install.packages("tidyverse")
+install.packages("gapminder")
+```
+
+# Library aktivieren
+```{r}
+library(gapminder)
+library(tidyverse)
+```
+
+# Daten einlesen
+```{r}
+gapminder_data <- gapminder
+```
+
+# Selektieren von Jahr 2007, 1977, 1952
+```{r}
+gapminder_1952_2007 <- gapminder_data %>% filter(year %in% c(1952, 1977, 2007))
+```
+
+# 
+```{r}
+by_year <- gapminder_data %>%
+  group_by(year,continent) %>%
+  summarize(mean_gdpPercap = mean(gdpPercap),
+            max_gdpPercap = max(gdpPercap),
+            median_gdpPercap = median(gdpPercap),
+            min_gdpPercap = min(gdpPercap))
+
+ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente") 
+
+ggplot(by_year, aes(x = year, y = median_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Median BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente")
+
+ggplot(by_year, aes(x = year, y = max_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Maximaler BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente")
+
+ggplot(by_year, aes(x = year, y = min_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Minimaler BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente")
+```
+
+
+```{r}
+byafrica <- by_year %>% filter(continent == "Africa")
+
+ggplot(byafrica, aes(x = year, y = mean_gdpPercap)) + 
+  geom_point() + 
+  geom_line() + 
+  geom_area(alpha = 0.2, fill = "red") + 
+  ylim(0, 30000) + 
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "Afrika",
+       caption = "12 Observationen")
+
+ggplot(byafrica, aes(x = year, y = mean_gdpPercap)) + 
+  geom_point() + 
+  geom_line() + 
+  geom_area(alpha = 0.2, fill = "red") + 
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "Afrika",
+       caption = "12 Observationen")
+
+
+
+```
+
+
+
+```{r}
+levels(by_year$continent)
+
+
+by_year$continent <- factor(by_year$continent, 
+                                 levels = c("Oceania", "Europe", "Asia", "Americas", "Africa"))
+```
+
+
+```{r}
+ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente") 
+```
+
+```{r}
+by_year$continent <- factor(by_year$continent, 
+                                 levels = c("Asia", "Africa", "Oceania", "Americas", "Europe"))
+```
+
+
+```{r}
+ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente") 
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
