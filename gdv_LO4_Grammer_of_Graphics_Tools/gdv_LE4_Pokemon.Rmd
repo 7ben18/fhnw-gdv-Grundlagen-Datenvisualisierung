@@ -78,6 +78,8 @@ pokemondata
 ```
 
 
+
+
 ```{r}
 ggplot(pokemondata, aes(x = Attack, y = Defense, 
                         color = as.factor(Type.1), 
@@ -93,6 +95,25 @@ ggplot(pokemondata, aes(x = Attack, y = Defense,
        size = "Total Stats",
        shape = "Dual Type")
 ```
+
+```{r}
+ggplot(pokemondata, aes(x = Attack, y = Defense, 
+                        color = as.factor(Type.1), 
+                        size = Total_Stats, 
+                        shape = dualtype)) + 
+  geom_point(alpha = 0.4) + 
+  geom_hline(yintercept = mean(pokemondata$Defense)) +
+  geom_vline(xintercept = mean(pokemondata$Attack)) + 
+  labs(title = "Attack and Defense",
+       x = "Attack",
+       y = "Defense",
+       subtitle = "Fire, Water and Grasstype",
+       caption = "Pokemon Data",
+       color = "Pokemon Type",
+       size = "Total Stats",
+       shape = "Dual Type")
+```
+
 # 6 Dimensions
 ```{r}
 ggplot(pokemondata, aes(x = Attack, y = Defense, 
