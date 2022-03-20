@@ -30,132 +30,161 @@ str(gapminder_data)
 ```{r}
 summary(gapminder_data)
 ```
-# Diagramm Beschriftung
-## Diagram ohne Beschriftung
+
+# Daten
 ```{r}
+gapminder_1952 <- gapminder_data %>% filter(year == 1952)
+
 gapminder_2007 <- gapminder_data %>% filter(year == 2007)
 
-ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
-  geom_point(alpha = 0.5) +
-  scale_y_log10() 
-```
-## Diagramm mit Beschriftung
-```{r}
-ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
-  geom_point(alpha = 0.5) +
-  labs(title = "Lebenserwartung in Abhängigkeit vom Bruttoinlandprodukt unterteilt in Kontienten",
-       subtitle = "Jahr 2007 - 147 Observationen",
-       x = "Bruttoinlandprodukt",
-       y = "Lebenserwartung in Jahren",
-       caption = "Datensatz: Gapminder",
-       color = "Kontinent",
-       size = "Bevölkerungsgrösse")
-  scale_y_log10() 
-```
-# Streudiagramm - Liniendiagramm 
-## Streudiagramm ohne Datenverstaendnis
-```{r}
-by_year_LifeExp <- gapminder_data %>% 
-  select(year, lifeExp, continent)
-
-ggplot(by_year_LifeExp, aes(x = year, y = lifeExp)) + 
-  geom_point(alpha = 1) + 
-  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder")
-```
-
-## Streudiagramm mit kleineren Punkten und Intensitaet
-```{r}
-by_year_LifeExp_2 <- gapminder_data %>% 
-  select(year, lifeExp, continent)
-
-ggplot(by_year_LifeExp_2, aes(x = year, y = lifeExp, color = continent)) + 
-  geom_point(alpha = 0.3, size = 1) + 
-  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder", color = "Kontinent")
-```
-
-## Streudiagram Aggregiert
-```{r}
-by_year <- gapminder %>%
+by_year1 <- gapminder %>%
   group_by(year) %>%
   summarize(mean_life_exp = mean(lifeExp))
-            
-ggplot(by_year, aes(x = year, y = mean_life_exp)) + 
-  geom_point() + 
-  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Durchschnittliche Lebenserwartung in Jahren", subtitle = "12 Observationen", caption = "Datensatz: Gapminder")
-```
 
-```{r}
-ggplot(by_year_LifeExp, aes(x = year, y = lifeExp)) + 
-  geom_point(alpha = 1) + 
-  geom_line() +
-  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder")
-```
+by_year2 <- gapminder %>%
+  group_by(year, continent) %>%
+  summarize(mean_life_exp = mean(lifeExp))
 
-
-## Liniendiagramm ohne Datenverstaendnis
-```{r}
-ggplot(by_year_LifeExp_2, aes(x = year, y = lifeExp, color = continent)) + 
-  geom_point(alpha = 0.3, size = 1) +
-  geom_line() + 
-  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung in Jahren", subtitle = "1704 Observationen", caption = "Datensatz: Gapminder", color = "Kontinent")
-```
-
-## Liniendiagramm - Streudiagramm Aggregiert
-```{r}
-ggplot(by_year, aes(x = year, y = mean_life_exp)) + 
-  geom_point(color = "blue", size = 2) +
-  geom_line() +
-  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Durchschnittliche Lebenserwartung in Jahren", subtitle = "12 Observationen", caption = "Datensatz: Gapminder")
-```
-# Histogramme
-## Schlechtes Histogramm der Lebenserwartung im Jahre 2007
-```{r}
 by_year_LifeExp_2007 <- gapminder_data %>% 
   select(year, lifeExp, continent)  %>% 
   filter(year == 2007)
+
 ```
 
+# Abbildung 2
+```{r}
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() + 
+  labs(title = "Lebenserwartung in Abhängigkeit von BIP",
+       x = "Bruttoinlandbrodukt",
+       y = "Lebenserartung",
+       subtitle = "Jahr 2007",
+       caption = "142 Observationen")
+```
+# # Abbildung 3
+```{r}
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent)) +
+  geom_point() + 
+  labs(title = "Lebenserwartung in Abhängigkeit von BIP",
+       x = "Bruttoinlandbrodukt",
+       y = "Lebenserartung",
+       subtitle = "Jahr 2007",
+       caption = "142 Observationen",
+       color = "Kontinent")
+```
+# Abbildung 4
+```{r}
+ggplot(gapminder_2007, aes(x = gdpPercap, y = lifeExp, color = continent, size = pop)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Lebenserwartung in Abhängigkeit von BIP",
+       x = "Bruttoinlandbrodukt",
+       y = "Lebenserartung",
+       subtitle = "Jahr 2007",
+       caption = "142 Observationen",
+       color = "Kontinent",
+       size = "Bevölkerungsgrösse")
+```
 
+# Abbildung 5
+```{r}
+ggplot(by_year1, aes(x = year, y = mean_life_exp)) + 
+  geom_point() + 
+  geom_line() +
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", 
+       x = "Jahr", 
+       y = "Durchschnittliche Lebenserwartung in Jahren", 
+       subtitle = "12 Observationen", 
+       caption = "Datensatz: Gapminder")
+```
+
+# Abbildung 6
+```{r}
+ggplot(by_year2, aes(x = year, y = mean_life_exp, color = continent)) + 
+  geom_point() + 
+  geom_line() + 
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", 
+       x = "Jahr", 
+       y = "Durchschnittliche Lebenserwartung in Jahren", 
+       caption = "60 Observationen",
+       color = "Kontinent")
+```
+
+# Abbildung 7
 ```{r}
 ggplot(by_year_LifeExp_2007, aes(x = lifeExp)) + 
   geom_histogram(bins = 3, fill = "grey", color = "black") + 
-  labs(title = "Histogramm der Lebenserwartung in 2007", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "142 Observationen, Anzahl Klassenbreite: 3", caption = "Datensatz: Gapminder")
+  labs(title = "Histogramm der Lebenserwartung in 2007", 
+       x = "Lebenserwartung in Jahren", 
+       y = "Anzahl Observationen", 
+       subtitle = "142 Observationen, Anzahl Klassenbreite: 3", 
+       caption = "Datensatz: Gapminder")
 ```
-
+# Abbildung 8
 ## Besseres Histogramm - Lebenserwartung der Welt (Multimodalitaeten)
 ```{r}
 ggplot(by_year_LifeExp_2007, aes(x = lifeExp)) + 
   geom_histogram(bins = 142, fill = "grey", color = "black") + 
-  labs(title = "Histogramm der Lebenserwartung in 2007", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "142 Observationen, Anzahl Klassenbreite: 142", caption = "Datensatz: Gapminder")
+  labs(title = "Histogramm der Lebenserwartung in 2007", 
+       x = "Lebenserwartung in Jahren", 
+       y = "Anzahl Observationen", 
+       subtitle = "142 Observationen, Anzahl Klassenbreite: 142", 
+       caption = "Datensatz: Gapminder")
 ```
-
+# Abbildung 9
 ## Besseres Histogramm - Lebenserwartung der Welt (bins mit = 30)
 ```{r}
 ggplot(by_year_LifeExp_2007, aes(x = lifeExp)) + 
   geom_histogram(bins = 30, fill = "grey", color = "black") + 
-  labs(title = "Histogramm der Lebenserwartung in 2007", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "142 Observationen, Anzahl Klassenbreite: 30", caption = "Datensatz: Gapminder")
+  labs(title = "Histogramm der Lebenserwartung in 2007", 
+       x = "Lebenserwartung in Jahren", 
+       y = "Anzahl Observationen", 
+       subtitle = "142 Observationen, Anzahl Klassenbreite: 30", 
+       caption = "Datensatz: Gapminder")
 ```
 
 
-
+# Abbildung 10
 ## Aufteilung nach Kontinente, fuer mehr Informationen (stack)
 ```{r}
-ggplot(by_year_LifeExp_2007, aes(x = lifeExp, color = continent, fill = continent)) + 
-  geom_density(alpha = 0.4) + 
-  labs(title = "Histogramm der Lebenserwartung in 2007", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "142 Observationen, Aufgestapelt", caption = "Datensatz: Gapminder", color = "Kontinent")
+ggplot(by_year_LifeExp_2007, aes(x = lifeExp, color = continent)) + 
+  geom_histogram(alpha = 0.4,
+                 fill = "white") + 
+  labs(title = "Histogramm der Lebenserwartung in 2007", 
+       x = "Lebenserwartung in Jahren", 
+       y = "Anzahl Observationen", 
+       subtitle = "142 Observationen, Aufgestapelt", 
+       caption = "Datensatz: Gapminder", 
+       color = "Kontinent")
 ```
 
+Abbildung 11
 ## Aufteilung nach Kontinente, fuer mehr Informationen (identity)
 ```{r}
 ggplot(by_year_LifeExp_2007, aes(x = lifeExp, color = continent)) + 
-  geom_histogram(fill = "white", alpha = 0.4, position="identity",bins = 30) + 
-  labs(title = "Histogramm der Lebenserwartung in 2007", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "142 Observationen, Überlappend", caption = "Datensatz: Gapminder", color = "Kontinent")
+  geom_histogram(fill = "white", 
+                 alpha = 0.4, 
+                 position="identity",
+                 bins = 30) + 
+  labs(title = "Histogramm der Lebenserwartung in 2007", 
+       x = "Lebenserwartung in Jahren", 
+       y = "Anzahl Observationen", 
+       subtitle = "142 Observationen, Überlappend", 
+       caption = "Datensatz: Gapminder", 
+       color = "Kontinent")
 ```
-
+# Abbildung 12
 ## Aufteilung nach Kontinente, fuer mehr Informationen (dodge)
 ```{r}
 ggplot(by_year_LifeExp_2007, aes(x = lifeExp, color = continent)) + 
-  geom_histogram(fill = "white", alpha = 0.4, position="dodge",bins = 30) + 
-  labs(title = "Histogramm der Lebenserwartung in 2007", x = "Lebenserwartung in Jahren", y = "Anzahl Observationen", subtitle = "142 Observationen, Nebeneinander", caption = "Datensatz: Gapminder", color = "Kontinent")
+  geom_histogram(fill = "white", 
+                 alpha = 0.4, 
+                 position="dodge",
+                 bins = 30) + 
+  labs(title = "Histogramm der Lebenserwartung in 2007", 
+       x = "Lebenserwartung in Jahren", 
+       y = "Anzahl Observationen", 
+       subtitle = "142 Observationen, Nebeneinander", 
+       caption = "Datensatz: Gapminder", 
+       color = "Kontinent")
 ```
 
