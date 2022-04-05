@@ -1,0 +1,61 @@
+---
+title: "gdv_LE5"
+output: html_notebook
+---
+
+```{r}
+# Bibliotheken & Datensatz
+## Bibliotheken Downloaden
+# Installation
+install.packages("tidyverse")
+install.packages("gapminder")
+```
+## Bibliotheken aktivieren
+```{r}
+library(tidyverse)
+library(gapminder)
+```
+
+# Daten einlesen
+```{r}
+gapimder <- gapminder
+```
+
+
+# Daten filtern nach Afgahnistan und Germany
+```{r}
+df_filter <- gapminder %>% filter(country %in% c("Afghanistan", "Germany", "Argentina"))
+
+```
+
+# Visualisieren
+```{r}
+levels(gapminder$continent)
+gapminder$continent <- factor(gapminder$continent, 
+                                 levels = c("Oceania", "Europe", "Asia", "Americas", "Africa"))
+
+
+ggplot(gapminder, aes(x = year, y = lifeExp, color = continent, size = gdpPercap)) +
+  geom_point(alpha = 0.3) + 
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", x = "Jahr", y = "Lebenserwartung",
+       color = "Kontinent", size = "BIP/Kopf")
+```
+
+
+
+```{r}
+gapminder_grouped <- gapminder %>%
+  group_by(year,continent) %>%
+  summarize(mean_lifexp = mean(lifeExp),
+            mean_gdp = mean(gdpPercap))
+
+ggplot(gapminder_grouped, aes(x = year, y = mean_lifexp, color = continent, size = mean_gdp)) + 
+  geom_point(alpha = 0.3) +
+  labs(title = "Lebenserwartung im Verlaufe der Zeit", 
+       x = "Jahr", y = " Ø Lebenserwartung",
+       color = "Kontinent", size = "Ø BIP/Kopf") 
+
+```
+
+
+
