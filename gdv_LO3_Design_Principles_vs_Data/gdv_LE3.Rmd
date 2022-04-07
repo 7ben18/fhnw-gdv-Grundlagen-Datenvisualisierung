@@ -120,6 +120,8 @@ by_year$continent <- factor(by_year$continent,
 ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
   geom_point() + 
   geom_line() + 
+  scale_color_manual(values = c("green", "orange", "red",
+                                "yellow", "blue")) + 
   labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
        x = "Jahre",
        y = "BIP/Kopf",
@@ -138,6 +140,8 @@ by_year$continent <- factor(by_year$continent,
 ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
   geom_point() + 
   geom_line() + 
+  scale_color_manual(values = c("green", "orange", "red",
+                                "black", "blue")) +  
   labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
        x = "Jahre",
        y = "BIP/Kopf",
