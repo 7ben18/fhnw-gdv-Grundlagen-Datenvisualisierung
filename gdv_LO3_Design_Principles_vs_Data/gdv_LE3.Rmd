@@ -37,7 +37,28 @@ by_year <- gapminder_data %>%
 
 ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
   geom_point() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
+  labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente") 
+
+ggplot(by_year, aes(x = year, y = median_gdpPercap, color = continent)) + 
+  geom_point() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
+  labs(title = "Median BIP/Kopf im verlaufe der Jahre",
+       x = "Jahre",
+       y = "BIP/Kopf",
+       subtitle = "60 Observationen",
+       caption = "Gapminder",
+       color = "Kontinente")
+
+ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
+  geom_point() + 
   geom_line() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
   labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
        x = "Jahre",
        y = "BIP/Kopf",
@@ -48,6 +69,7 @@ ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) +
 ggplot(by_year, aes(x = year, y = median_gdpPercap, color = continent)) + 
   geom_point() + 
   geom_line() + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) +
   labs(title = "Median BIP/Kopf im verlaufe der Jahre",
        x = "Jahre",
        y = "BIP/Kopf",
@@ -55,25 +77,9 @@ ggplot(by_year, aes(x = year, y = median_gdpPercap, color = continent)) +
        caption = "Gapminder",
        color = "Kontinente")
 
-ggplot(by_year, aes(x = year, y = max_gdpPercap, color = continent)) + 
-  geom_point() + 
-  geom_line() + 
-  labs(title = "Maximaler BIP/Kopf im verlaufe der Jahre",
-       x = "Jahre",
-       y = "BIP/Kopf",
-       subtitle = "60 Observationen",
-       caption = "Gapminder",
-       color = "Kontinente")
 
-ggplot(by_year, aes(x = year, y = min_gdpPercap, color = continent)) + 
-  geom_point() + 
-  geom_line() + 
-  labs(title = "Minimaler BIP/Kopf im verlaufe der Jahre",
-       x = "Jahre",
-       y = "BIP/Kopf",
-       subtitle = "60 Observationen",
-       caption = "Gapminder",
-       color = "Kontinente")
+# Farbenfreundliche Farben: "#d73027", "#fc8d59", "#fee090", "#91bfdb", "#4575b4"
+
 ```
 
 
@@ -120,8 +126,7 @@ by_year$continent <- factor(by_year$continent,
 ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
   geom_point() + 
   geom_line() + 
-  scale_color_manual(values = c("green", "orange", "red",
-                                "yellow", "blue")) + 
+  scale_color_manual(values = c("orange", "blue", "green", "black", "red")) + 
   labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
        x = "Jahre",
        y = "BIP/Kopf",
@@ -140,8 +145,7 @@ by_year$continent <- factor(by_year$continent,
 ggplot(by_year, aes(x = year, y = mean_gdpPercap, color = continent)) + 
   geom_point() + 
   geom_line() + 
-  scale_color_manual(values = c("green", "orange", "red",
-                                "black", "blue")) +  
+  scale_color_manual(values = c("orange", "green", "blue", "black", "red")) +  
   labs(title = "Durchschnittlicher BIP/Kopf im verlaufe der Jahre",
        x = "Jahre",
        y = "BIP/Kopf",
