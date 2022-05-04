@@ -121,6 +121,8 @@ ggplot(pokemondata, aes(x = Attack, y = Defense,
                         size = Total_Stats, 
                         shape = dualtype)) + 
   geom_point(alpha = 0.4) + 
+  geom_hline(yintercept = mean(pokemondata$Defense)) +
+  geom_vline(xintercept = mean(pokemondata$Attack)) + 
   labs(title = "Attack and Defense",
        x = "Attack",
        y = "Defense",
@@ -140,6 +142,8 @@ ggplot(pokemondata, aes(x = Attack, y = Defense,
                         size = Total_Stats, 
                         shape = dualtype)) + 
   geom_point(alpha = 0.4) + 
+  geom_hline(yintercept = mean(pokemondata$Defense)) +
+  geom_vline(xintercept = mean(pokemondata$Attack)) + 
   labs(title = "Attack and Defense",
        x = "Attack",
        y = "Defense",
