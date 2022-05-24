@@ -1,4 +1,4 @@
 # grundlagen_datenvisualisierung
 
-Dieses Repository dient fuer den Leistungsnachweis fuer das Modul gdv.
+Dieses Repository dient als Leistungsnachweis für das Modul gdv. 
 
